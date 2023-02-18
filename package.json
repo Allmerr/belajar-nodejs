@@ -1,0 +1,20 @@
+{
+    "name": "nodejs",
+    "version": "1.0.0",
+    "description": "belajar npm",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Allmerr/belajar-nodejs.git"
+    },
+    "author": "Kevin Almer",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Allmerr/belajar-nodejs/issues"
+    },
+    "homepage": "https://github.com/Allmerr/belajar-nodejs#readme"
+}
