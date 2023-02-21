@@ -1,69 +1,23 @@
-const yargs = require("yargs");
-const contacts = require("./contacts");
+const express = require("express");
+const app = express();
+const port = 3000;
 
-yargs
-    .command({
-        command: "add",
-        describe: "Add New Contact",
-        builder: {
-            nama: {
-                describe: "Full Name",
-                demandOption: true,
-                type: "string",
-            },
-            noHp: {
-                describe: "Full Name",
-                demandOption: true,
-                type: "string",
-            },
-            email: {
-                describe: "Email Adress",
-                demandOption: false,
-                type: "string",
-            },
-        },
-        handler(argv) {
-            contacts.saveContact(argv.nama, argv.noHp, argv.email);
-        },
-    })
-    .demandCommand();
-
-yargs.command({
-    command: "list",
-    describe: "Get The All Contact List",
-    handler() {
-        contacts.listContact();
-    },
+app.get("/", (req, res) => {
+    res.sendFile("./views/index.html", { root: __dirname });
 });
 
-yargs.command({
-    command: "detail",
-    describe: "Get The Detail Contact by Nama",
-    builder: {
-        nama: {
-            describe: "Full Name",
-            demandOption: true,
-            type: "string",
-        },
-    },
-    handler(argv) {
-        contacts.detailContact(argv.nama);
-    },
+app.get("/about", (req, res) => {
+    res.sendFile("./views/about.html", { root: __dirname });
 });
 
-yargs.command({
-    command: "delete",
-    describe: "Delete The Spesific Given Contact",
-    builder: {
-        nama: {
-            describe: "Full Name",
-            demandOption: true,
-            type: "string",
-        },
-    },
-    handler(argv) {
-        contacts.deleteContact(argv.nama);
-    },
+app.get("/contact", (req, res) => {
+    res.sendFile("./views/contact.html", { root: __dirname });
 });
 
-yargs.parse();
+app.use("/", (req, res) => {
+    res.sendFile("./views/index.html", { root: __dirname });
+});
+
+app.listen(port, () => {
+    console.log("Listening to http://localhost:3000");
+});
