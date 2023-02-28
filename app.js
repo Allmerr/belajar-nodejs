@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const morgan = require("morgan");
+const { getDataContacts, getDetailContacts } = require("./utils/contact");
 
 // gunakan ejs
 app.set("view engine", "ejs");
@@ -13,17 +14,9 @@ app.use(morgan("dev"));
 // built-in function middlewere
 app.use(express.static("public"));
 
-// application level middleware
-app.use((req, res, next) => {
-    console.log(`Time : ${Date.now()}`);
-    next();
-});
-
 // route
-
 app.get("/", (req, res) => {
     // res.sendFile("./views/index.html", { root: __dirname });
-
     const mahasiswa = [
         {
             nama: "kevin almer",
@@ -34,7 +27,6 @@ app.get("/", (req, res) => {
             email: "kerindwi@gmail.com",
         },
     ];
-
     res.render("index", {
         nama: "Kevin Almer",
         title: "Home",
@@ -48,8 +40,19 @@ app.get("/about", (req, res) => {
     });
 });
 
-app.get("/product/:id/kategori/:kategori", (req, res) => {
-    res.send(`Product nomor ${req.params.id} dengan kategori ${req.params.kategori} tersedia`);
+app.get("/contact", (req, res) => {
+    res.render("contact", {
+        title: "Contact",
+        contacts: getDataContacts(),
+    });
+});
+
+app.get("/contact/:nama", (req, res) => {
+    const contact = getDetailContacts(req.params.nama);
+    res.render("contact-detail", {
+        title: "Contact Detail",
+        contact,
+    });
 });
 
 app.use((req, res) => {

@@ -1,0 +1,38 @@
+<%- include('layouts/header') %>
+<%- include('layouts/nav') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Daftar Contact</h1>
+            <% if (contacts.length < 1) { %>
+            <div class="alert alert-danger">Data's Contact is empty</div>
+            <% } else { %>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">No Handphone</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% contacts.forEach((contact , i)=> {  %>
+                    <tr>
+                        <th scope="row"><%= ++i %></th>
+                        <td><%= contact.nama %></td>
+                        <td><%= contact.nohp %></td>
+                        <td>
+                            <a href="/contact/<%= contact.nama %>" class="btn badge text-bg-secondary"><i class="bi bi-info"></i> Detail</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+        </div>
+    </div>    
+</div>
+
+<%- include('layouts/footer') %>
