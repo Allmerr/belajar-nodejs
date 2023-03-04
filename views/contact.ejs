@@ -5,6 +5,12 @@
     <div class="row">
         <div class="col-md-8">
             <h1>Daftar Contact</h1>
+            <% if (!success.length < 1) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+            <% } %>
+            <a href="/contact/add" class="btn badge text-bg-success">+ Add New Contact</a>
             <% if (contacts.length < 1) { %>
             <div class="alert alert-danger">Data's Contact is empty</div>
             <% } else { %>

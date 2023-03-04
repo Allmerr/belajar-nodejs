@@ -24,4 +24,17 @@ const getDetailContacts = (nama) => {
     });
 };
 
-module.exports = { getDataContacts, getDetailContacts };
+const addDataContact = (contact) => {
+    const data = getDataContacts();
+    data.push(contact);
+    fs.writeFileSync(filePath, JSON.stringify(data));
+};
+
+const checkDuplicate = (nama) => {
+    const data = getDataContacts();
+    return data.find((contact) => {
+        return contact.nama === nama;
+    });
+};
+
+module.exports = { getDataContacts, getDetailContacts, addDataContact, checkDuplicate };
