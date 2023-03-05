@@ -31,6 +31,8 @@
                         <td><%= contact.nohp %></td>
                         <td>
                             <a href="/contact/<%= contact.nama %>" class="btn badge text-bg-secondary"><i class="bi bi-info"></i> Detail</a>
+                            <a href="/contact/edit/<%= contact.nama %>" class="btn badge text-bg-warning"><i class="bi bi-pencil" ></i> Edit</a>
+                            <a href="/contact/delete/<%= contact.nama %>" class="btn badge text-bg-danger" onclick="return confirm('Are You Sure To Delete?');"><i class="bi bi-trash" ></i> Delete</a>
                         </td>
                     </tr>
                     <% }) %>

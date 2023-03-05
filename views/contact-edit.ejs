@@ -2,7 +2,7 @@
 <%- include('layouts/nav') %>
 
 <div class="container mt-5">
-    <h2>Add New Contact</h2>
+    <h2>Edit A Contact</h2>
     <% if (typeof errors !== 'undefined') { %>
     <div class="alert alert-danger" role="alert">
       <ul>
@@ -13,18 +13,19 @@
     </div>
     <% } %>
     <div class="col-md-8">
-        <form action="/contact" method="post">
+        <form action="/contact/update" method="post">
+            <input type="hidden" name="namaOld" value="<%= contact.nama %>">
             <div class="mb-3">
               <label for="nama" class="form-label">Nama</label>
-              <input type="nama" class="form-control" id="nama" name="nama" required>
+              <input type="nama" class="form-control" id="nama" name="nama" value="<%= contact.nama %>" required> 
             </div>
             <div class="mb-3">
               <label for="nohp" class="form-label">No Handphone</label>
-              <input type="nohp" class="form-control" id="nohp" name="nohp" required>
+              <input type="nohp" class="form-control" id="nohp" name="nohp" value="<%= contact.nohp %>" required>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" name="email" required>
+              <input type="email" class="form-control" id="email" name="email" value="<%= contact.email %>" required>
             </div>
             <button type="submit" class="btn btn-secondary">Submit</button>
         </form>

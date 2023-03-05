@@ -37,4 +37,22 @@ const checkDuplicate = (nama) => {
     });
 };
 
-module.exports = { getDataContacts, getDetailContacts, addDataContact, checkDuplicate };
+const deleteContact = (nama) => {
+    const data = getDataContacts();
+    const filteredData = data.filter((contact) => {
+        return contact.nama !== nama;
+    });
+    fs.writeFileSync(filePath, JSON.stringify(filteredData));
+};
+
+const updateDataContacts = (newContact) => {
+    const data = getDataContacts();
+    const filteredData = data.filter((contact) => {
+        return contact.nama !== newContact.namaOld;
+    });
+    delete newContact.namaOld;
+    filteredData.push(newContact);
+    fs.writeFileSync(filePath, JSON.stringify(filteredData));
+};
+
+module.exports = { getDataContacts, getDetailContacts, addDataContact, checkDuplicate, deleteContact, updateDataContacts };

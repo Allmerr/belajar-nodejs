@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const morgan = require("morgan");
-const { getDataContacts, getDetailContacts, addDataContact, checkDuplicate } = require("./utils/contact");
+const { getDataContacts, getDetailContacts, addDataContact, checkDuplicate, deleteContact, updateDataContacts } = require("./utils/contact");
 const { body, validationResult, check } = require("express-validator");
 
 // require flash
@@ -99,6 +99,60 @@ app.get("/contact/add", (req, res) => {
     res.render("contact-add", {
         title: "Add New Contact",
     });
+});
+
+app.get("/contact/edit/:nama", (req, res) => {
+    const data = getDetailContacts(req.params.nama);
+
+    if (!data) {
+        res.status(404);
+        res.send("<h1>Not Found</h1>");
+    }
+    res.render("contact-edit", {
+        title: "Edit Contact",
+        contact: data,
+    });
+});
+
+app.post(
+    "/contact/update",
+    [
+        body("nama").custom((value, { req }) => {
+            if (checkDuplicate(value) && req.body.nama !== req.body.namaOld) {
+                throw new Error("Nama is already taken!");
+            }
+            return true;
+        }),
+        check("email", "Email is not valid!").isEmail(),
+        check("nohp", "No HandPhone is not valid!").isMobilePhone("id-ID"),
+    ],
+    (req, res) => {
+        const data = getDetailContacts(req.body.namaOld);
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.render("contact-edit", {
+                title: "Edit A Contact Failed!",
+                errors: errors.array(),
+                contact: data,
+            });
+        } else {
+            updateDataContacts(req.body);
+            req.flash("success", "Edit A Contact Success!");
+            res.redirect("/contact");
+        }
+    }
+);
+
+app.get("/contact/delete/:nama", (req, res) => {
+    const contact = getDetailContacts(req.params.nama);
+    if (!contact) {
+        res.status(404);
+        res.send("<h1>404</h1>");
+    } else {
+        deleteContact(req.params.nama);
+        req.flash("success", "Delete A Contact Success!");
+        res.redirect("/contact");
+    }
 });
 
 app.get("/contact/:nama", (req, res) => {
