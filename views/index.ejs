@@ -1,0 +1,25 @@
+<%- include('layouts/header') %>
+<%- include('layouts/nav') %>
+
+
+<div class="container">
+    <h1>Hello From home</h1>
+
+    <h2>Hello Nama saya <%= nama %></h2>
+
+    <% if (mahasiswa.length < 1) { %>
+        <h4>Data Kosong</h4>
+    <%  } else { %>
+        <h4>Daftar Mahasiswa</h4>
+        <ul>
+        <% mahasiswa.forEach(mhs => { %>
+            <li><%= mhs.nama %></li>    
+            <li><%= mhs.email %></li>
+            <br>
+        <% }) %>
+        </ul>
+    <% } %>
+</div>
+
+        
+<%- include('layouts/footer') %>

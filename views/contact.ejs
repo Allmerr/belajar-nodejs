@@ -1,0 +1,49 @@
+<%- include('layouts/header') %>
+<%- include('layouts/nav') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Daftar Contact</h1>
+            <% if (!success.length < 1) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+            <% } %>
+            <a href="/contact/add" class="btn badge text-bg-success">+ Add New Contact</a>
+            <% if (contacts.length < 1) { %>
+            <div class="alert alert-danger">Data's Contact is empty</div>
+            <% } else { %>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">No Handphone</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% contacts.forEach((contact , i)=> {  %>
+                    <tr>
+                        <th scope="row"><%= ++i %></th>
+                        <td><%= contact.nama %></td>
+                        <td><%= contact.nohp %></td>
+                        <td>
+                            <a href="/contact/<%= contact.nama %>" class="btn badge text-bg-secondary"><i class="bi bi-info"></i> Detail</a>
+                            <a href="/contact/edit/<%= contact.nama %>" class="btn badge text-bg-warning"><i class="bi bi-pencil" ></i> Edit</a>
+                            <form action="/contact?_method=DELETE" method="post" class="d-inline">
+                                <input type="hidden" name="nama" value="<%= contact.nama %>">
+                                <button type="submit" class="btn badge text-bg-danger" onclick="return confirm('Are You Sure To Delete?');"><i class="bi bi-trash" ></i> Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+        </div>
+    </div>    
+</div>
+
+<%- include('layouts/footer') %>

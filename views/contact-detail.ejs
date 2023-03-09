@@ -1,0 +1,21 @@
+<%- include('layouts/header') %>
+<%- include('layouts/nav') %>
+
+<div class="container">
+    <% if (!contact) { %>
+        <div class="alert alert-danger" role="alert">
+            Detail Contact Tidak Ada <a href="/contact" class="alert-link">Back</a>
+        </div>
+    <% } else { %>
+    <div class="card my-5" style="width: 18rem;">
+        <div class="card-body ">
+          <h5 class="card-title"><%= contact.nama %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><%= contact.nohp %></h6>
+          <h6 class="card-subtitle mb-2 text-muted"><%= contact.email %></h6>
+          <a href="/contact" class="card-link">Back</a>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<%- include('layouts/footer') %>
